@@ -7,7 +7,7 @@ const {AuthUser} = require('../../models/auth/AuthUser')
 
 it("auth_user",async ()=>{
 
-    const jane = AuthUser.build({ name: "Jane",password:"123456" });
+    const jane = AuthUser.build({ username: "Jane",password:"123456" });
     
     await jane.save()
     // Jane 现在存在于数据库中！
