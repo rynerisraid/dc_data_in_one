@@ -64,7 +64,12 @@ const AdminMenuGroup = sqlite_sequelize.define('admin_menu_group',{
     },
     auth_group_id: { type: DataTypes.INTEGER},
     menu_id: { type: DataTypes.INTEGER}
-    
+},{
+    freezeTableName: true,
+    //tableName: 'admin_menu',
+    // 不想要 createdAt
+    createdAt: false,
+    updatedAt: false
 })
 
 module.exports = {
