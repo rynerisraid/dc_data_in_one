@@ -13,6 +13,7 @@ let routes = [
   { path: '/',name: 'home',component: HomeView },
   { path: '/about',  name: 'about', component: () => import('../views/AboutView.vue') },
   { path: '/account', name: 'account', component:()=>import('../views/AccountView.vue') },
+  { path: '/login', name: 'login', component:()=>import('../views/LoginView.vue') },
   { 
     path: "/dashboard",name:'dashboard', component: ()=> import("../views/dashboard/DashboardView.vue"),
     children:[
