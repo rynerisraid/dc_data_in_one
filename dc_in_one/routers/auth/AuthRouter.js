@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const {AuthUser} = require('../../models/auth/AuthUser')
 
 
 
@@ -18,8 +19,34 @@ router.get('/ping', (req,res)=>{
  * 
  */
 
-router.post('/signin',(req,res)=>{
-    
+router.post('/signin',async (req,res)=>{
+    //验证密码
+    const { username,password} = req.query
+    console.log('/signin',{ username,password})
+    let result ={
+        msg:'ok',
+        code:200
+    }
+    try {
+        const users = await AuthUser.findAll({
+            attributes: ['username', 'password'],
+            where:{
+                username:username,
+                password:password,
+                status:'A'
+            }});
+        if(users.length>0){
+            result['data'] = '登录成功!'
+            result['token'] = 'aaaaaaaaaaaaaaaaaaaaaa'
+        }else{
+            result['data'] = '登录失败!请检查账号密码'
+            result['msg'] = 'error'
+        }
+        
+    } catch (error) {
+        result['msg'] = error
+    }
+    res.send(result)
 })
 
 /**
@@ -27,7 +54,7 @@ router.post('/signin',(req,res)=>{
  */
 
 router.get('/signup',(req,res)=>{
-    
+
 
 })
 

@@ -5,7 +5,7 @@ const { sqlite_sequelize } = require("../db/DbUtil")
 const { QueryTypes } = require('sequelize');
 
 
-router.get('/test', async (req,res)=>{
+router.get('/test_db', async (req,res)=>{
 
     const results = await sqlite_sequelize.query(`select 'hello' as col1`,{ type: QueryTypes.SELECT })
     

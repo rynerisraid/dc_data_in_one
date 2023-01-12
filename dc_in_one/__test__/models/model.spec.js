@@ -6,22 +6,34 @@ const { AdminMenu, AdminMenuGroup } = require('../../models/menu/MenuGroup')
  * 
  */
 
-it("auth_user",async ()=>{
+describe('ORM框架的测试文件',()=>{
+    it("auth_user",async ()=>{
 
-    // const jane = AuthUser.build({ username: "Jane",password:"123456" });
+        // const jane = AuthUser.build({ username: "Jane",password:"123456" });
+        
+        // await jane.save()
+        // // Jane 现在存在于数据库中！
+        // console.log(jane instanceof AuthUser); // true
+        // console.log(jane.toJSON()); // "Jane"
     
-    // await jane.save()
-    // // Jane 现在存在于数据库中！
-    // console.log(jane instanceof AuthUser); // true
-    // console.log(jane.toJSON()); // "Jane"
+        // 查询所有用户
+        const users = await AuthUser.findAll({attributes: ['username', 'password'],where:{id:1}});
+        //console.log(users[0].dataValues)
+        
+        expect(JSON.stringify(users[0].dataValues)).toBe(JSON.stringify({username: "Jane",password: "123456"}))
+        console.log(JSON.stringify(users[0].dataValues))
+    })
 
-    // 查询所有用户
-    const users = await AuthUser.findAll({attributes: ['username', 'password'],where:{id:1}});
-    //console.log(users[0].dataValues)
+    it('auth_user:测试登录', async()=>{
+        // 查询所有用户
+        const users = await AuthUser.findAll({attributes: ['username', 'password'],where:{username:"Jane"}});
+        //console.log(users[0].dataValues)
+        
+        expect(JSON.stringify(users[0].dataValues)).toBe(JSON.stringify({username: "Jane",password: "123456"}))
     
-    expect(JSON.stringify(users[0].dataValues)).toBe(JSON.stringify({username: "Jane",password: "123456"}))
-
+    })
 })
+
     
 
 /**
