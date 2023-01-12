@@ -16,6 +16,7 @@ app.use(express.static(path.join(__dirname,"public")))
  * 路由
  */
 app.use("/test",require("./routers/TestRouter"))
+app.use("/auth",require("./routers/auth/AuthRouter"))
 
 
 app.get("/",async (req,res)=>{

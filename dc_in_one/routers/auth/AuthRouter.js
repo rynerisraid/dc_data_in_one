@@ -18,17 +18,18 @@ router.get('/ping', (req,res)=>{
  * 
  */
 
-router.get('/signin',(req,res)=>{
+router.post('/signin',(req,res)=>{
     
 })
-
-
-
 
 /**
  * 用户登录
  */
 
+router.get('/signup',(req,res)=>{
+    
+
+})
 
 
 /**
