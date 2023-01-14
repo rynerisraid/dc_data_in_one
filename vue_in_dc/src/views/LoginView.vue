@@ -1,14 +1,19 @@
 <template>
     <div class="login-panel">
-        <div title="管理后台登录">
-            <form :rules="rules" :model="admin">
-                    <input v-model="admin.account" placeholder="请输入账号" />
-                    <input v-model="admin.password" type="password" placeholder="请输入密码" />
-            </form>
-                <checkbox v-model:checked="admin.rember" label="记住我" />
-                <button @click="login">登录</button>
-
-        </div>
+        <n-card title="管理后台登录">
+            <n-form :rules="rules" :model="admin">
+                <n-form-item path="account" label="账号">
+                    <n-input v-model:value="admin.account" placeholder="请输入账号" />
+                </n-form-item>
+                <n-form-item path="password" label="密码">
+                    <n-input v-model:value="admin.password" type="password" placeholder="请输入密码" />
+                </n-form-item>
+            </n-form>
+            <template #footer>
+                <n-checkbox v-model:checked="admin.rember" label="记住我" />
+                <n-button @click="login">登录</n-button>
+            </template>
+        </n-card>
     </div>
     
 </template>
@@ -53,7 +58,27 @@ const admin = reactive({
 
 /**登录 */
 const login = async () => {
-    console.log('log in')
+    let result = await axios.post("/admin/login", {
+        account: admin.account,
+        password: admin.password
+    });
+    console.log(result)
+    if (result.data.code == 200) {
+        adminStore.token = result.data.data.token
+        adminStore.account = result.data.data.account
+        adminStore.id = result.data.data.id
+
+        //把数据存储到localStorage
+        if (admin.rember) {
+            localStorage.setItem("account", admin.account)
+            localStorage.setItem("password", admin.password)
+            localStorage.setItem("rember", admin.rember ? 1 : 0)
+        }
+        router.push("/dashboard")
+        message.info("登录成功")
+    } else {
+        message.error("登录失败")
+    }
 
 }
 
