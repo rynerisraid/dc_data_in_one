@@ -16,10 +16,59 @@ router.get('/ping', (req,res)=>{
 
 /**
  * 用户注册
- * 
+ */
+router.post('/signup',async (req,res)=>{
+    //账号密码
+    const { username, password } = req.body
+    console.log('/signup',{ username, password } )
+    //TODO: 注意以上线的时候需要将密码进行盐化
+    let result = {
+        msg:'ok',
+        code:200
+    }
+
+    try {
+        const users = await AuthUser.findAll({
+            attributes: ['username'],
+            where:{
+                username:username,
+                status:'A'
+            }});
+        console.log('users',users)
+        if(users.length>0){
+            result.username = username
+            result.info = '注册失败'
+        }else{
+            console.log('signup 创建用户')
+            const user = await AuthUser.create({
+                username,
+                status:'A'
+            })
+            result.username = username
+            result.info = '注册成功'
+        }
+        
+    } catch (error) {
+        result.msg = error
+        console.error(error)
+    }
+
+
+    
+    
+
+    res.send(result)
+    
+    
+})
+
+/**
+ * 用户登录
  */
 
-router.post('/signin',async (req,res)=>{
+
+
+router.get('/signin',async (req,res)=>{
     //验证密码
     const { username,password} = req.query
     console.log('/signin',{ username,password})
@@ -49,14 +98,7 @@ router.post('/signin',async (req,res)=>{
     res.send(result)
 })
 
-/**
- * 用户登录
- */
 
-router.get('/signup',(req,res)=>{
-
-
-})
 
 
 /**

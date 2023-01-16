@@ -1,18 +1,40 @@
 <template>
-  <div class="login-panel">
-      <n-card title="管理后台登录">
-          <n-form :rules="rules" :model="admin">
-              <n-form-item path="account" label="账号">
-                  <n-input v-model:value="admin.account" placeholder="请输入账号" />
-              </n-form-item>
-              <n-form-item path="password" label="密码">
-                  <n-input v-model:value="admin.password" type="password" placeholder="请输入密码" />
-              </n-form-item>
-          </n-form>
-          <template #footer>
-              <n-checkbox v-model:checked="admin.rember" label="记住我" />
-              <n-button @click="login">登录</n-button>
-          </template>
+  <div class="auth-panel">
+      <n-card title="Too Simple">
+        <n-tabs default-value="signin" size="large" justify-content="space-evenly">
+            <n-tab-pane name="signin" tab="登录">
+                <n-form :rules="rules" :model="admin">
+                <n-form-item path="account" label="用户名">
+                    <n-input v-model:value="admin.username" placeholder="请输入账号" />
+                </n-form-item>
+                <n-form-item path="password" label="密码">
+                    <n-input v-model:value="admin.password" type="password" placeholder="请输入密码" />
+                </n-form-item>
+            </n-form>
+                <n-checkbox v-model:checked="admin.rember" label="记住我" />
+                <n-button type="primary" block secondary strong @click="signin">
+                    登录
+                </n-button>
+            </n-tab-pane>
+
+            <n-tab-pane name="signup" tab="注册">
+                <n-form>
+                    <n-form-item-row label="用户名">
+                        <n-input v-model:value="admin.username" placeholder="请输入账号" />
+                    </n-form-item-row>
+                    <n-form-item-row label="密码">
+                        <n-input v-model:value="admin.password" type="password" placeholder="请输入密码" />
+                    </n-form-item-row>
+                    <!-- <n-form-item-row label="重复密码">
+                        <n-input />
+                    </n-form-item-row> -->
+                </n-form>
+                <n-button type="primary" block secondary strong @click="signup">
+                    注册
+                </n-button>
+            </n-tab-pane>
+          
+        </n-tabs>
       </n-card>
   </div>
   
@@ -36,7 +58,7 @@ const adminStore = AdminStore()
 
 /**验证表单规则 */
 let rules = {
-  account: [
+    username: [
       { required: true, message: "请输入账号", trigger: "blur" },
       { min: 3, max: 12, message: "账号长度在 3 到 12 个字符", trigger: "blur" },
   ],
@@ -48,17 +70,15 @@ let rules = {
 
 /**管理员登录数据 */
 const admin = reactive({
-  account: localStorage.getItem("account") || "",
-  password: localStorage.getItem("password") || "",
-  rember: localStorage.getItem("rember") == 1 || false
+    username: localStorage.getItem("username") || "",
+    password: localStorage.getItem("password") || "",
+    rember: localStorage.getItem("rember") == 1 || false
 })
 
 
-
-
-/**登录 */
+/**登录 
 const login = async () => {
-  let result = await axios.post("/admin/login", {
+  let result = await axios.post("/auth/login", {
       account: admin.account,
       password: admin.password
   });
@@ -79,13 +99,40 @@ const login = async () => {
   } else {
       message.error("登录失败")
   }
-
 }
+*/
+
+/**注册函数 */
+const signup = async()=>{
+    console.log('siginup',{
+        username: admin.username,
+        password: admin.password
+    })
+    let result = await axios.post("/auth/signup",{
+        username: admin.username,
+        password: admin.password
+    });
+    console.log(result)
+  if (result.data.code == 200 ) {
+      //adminStore.token = result.data.data.token
+      adminStore.username = result.data.username
+      //adminStore.id = result.data.data.id
+      //把数据存储到localStorage
+      message.info(`注册成功, ${adminStore.username}`)
+  } else {
+      message.error(`注册失败, 账号 ${result.data.username} 已存在`)
+  }
+}
+
+const signin = async()=>{
+    console.log('signin')
+}
+
 
 </script>
 
 <style lang="scss" scoped>
-.login-panel {
+.auth-panel {
   width: 660px;
   margin: 0 auto;
   margin-top: 130px;

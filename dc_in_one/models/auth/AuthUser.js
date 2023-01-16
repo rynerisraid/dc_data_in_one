@@ -12,7 +12,8 @@ const AuthUser =  sqlite_sequelize.define('auth_user',{
         id:{
             type: DataTypes.INTEGER,
             autoIncrement: true,
-            primaryKey: true
+            primaryKey: true,
+            unique:true
         },
         username:       {type: DataTypes.STRING},
         password:       {type: DataTypes.STRING},
@@ -25,8 +26,8 @@ const AuthUser =  sqlite_sequelize.define('auth_user',{
         last_login:     { type: DataTypes.BIGINT },
         date_joined:    { type: DataTypes.BIGINT }
     },{
-        freezeTableName: true,
-        //tableName: 'auth_user',
+        //freezeTableName: true,
+        tableName: 'auth_user',
         // 不想要 createdAt
         createdAt: false,
         updatedAt: false
