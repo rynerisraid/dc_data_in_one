@@ -112,8 +112,8 @@ const signup = async()=>{
         username: admin.username,
         password: admin.password
     });
-    console.log(result)
-  if (result.data.code == 200 ) {
+    //console.log(result)
+  if (result.data.code === 200 && result.data.msg==='ok') {
       //adminStore.token = result.data.data.token
       adminStore.username = result.data.username
       //adminStore.id = result.data.data.id
@@ -126,6 +126,33 @@ const signup = async()=>{
 
 const signin = async()=>{
     console.log('signin')
+    console.log('signin',{username: admin.username,password:admin.password})
+    let result = await axios({
+        url:"/auth/signin", 
+        params:{
+            username: admin.username,
+            password: admin.password
+        }
+    });
+
+    console.log(result)
+
+    if (result.data.code == 200 && result.data.msg =='ok') {
+        adminStore.token = result.data.data.token
+        adminStore.username = result.data.data.username
+        adminStore.id = result.data.data.id
+
+        //把数据存储到localStorage
+        if (admin.rember) {
+            localStorage.setItem("username", admin.username)
+            localStorage.setItem("password", admin.password)
+            localStorage.setItem("rember", admin.rember ? 1 : 0)
+        }
+        router.push("/")
+        message.info("登录成功")
+    } else {
+        message.error("登录失败")
+    }
 }
 
 

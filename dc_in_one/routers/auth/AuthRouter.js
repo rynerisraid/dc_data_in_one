@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const {AuthUser} = require('../../models/auth/AuthUser')
-
+const { v4:uuidv4 } = require('uuid')   //node uuid
+const { db,genid } = require("../../db/DbUtil")
 
 
 /**
@@ -27,7 +28,8 @@ router.post('/signup',async (req,res)=>{
     //TODO: 注意以上线的时候需要将密码进行盐化
     let result = {
         msg:'ok',
-        code:200
+        code:200,
+        username
     }
     try {
         const user = await AuthUser.build({ username, password })
@@ -42,12 +44,15 @@ router.post('/signup',async (req,res)=>{
 
 /**
  * 用户登录
+ * get 请求要用 query
  */
 
 router.get('/signin',async (req,res)=>{
     //验证密码
-    const { username,password} = req.body
-    console.log('/signin',{ username,password})
+    const { username,password } = req.query;
+    console.log(req)
+
+    console.log('/signin',{ username,password } )
     let result ={
         msg:'ok',
         code:200
