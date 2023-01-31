@@ -1,7 +1,7 @@
-const {GenericSQL} = require ('dt-sql-parser')
+const {PostgresSQL} = require ('dt-sql-parser')
 const LineageGenerator = require('../../utils/LineageGenerator')
 
-const parser = new GenericSQL();
+const parser = new PostgresSQL();
 describe('测试dt-sql-parser', () => {
     it('should be []', () => {
         

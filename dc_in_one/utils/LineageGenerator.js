@@ -1,17 +1,31 @@
-const { GenericSQL, SqlParserVisitor } = require('dt-sql-parser')
+const { PostgresSQL, PostgreSQLParserVisitor } = require('dt-sql-parser')
 
-const parser = new GenericSQL()
+const parser = new PostgresSQL()
 const sql = `select id,name from user1;`
 // parseTree
 const tree = parser.parse(sql)
 
-class LineageGenerator extends SqlParserVisitor{
+class LineageGenerator extends PostgreSQLParserVisitor{
     constructor(){
         super()
-        this.depMap = {}
+        this.depsMap={
+            input:[],
+            output:[]
+        }
         
     }
     
+    
+
+    /*
+    visitTable_ref(ctx){
+        
+    }
+    */
+
+    
+
+    /*
     visitTableName(ctx){
         let tableName = ctx.getText().toLowerCase()
         console.log('TableName', tableName)
@@ -20,6 +34,9 @@ class LineageGenerator extends SqlParserVisitor{
         let selectElements = ctx.getText().toLowerCase()
         console.log('SelectElements', selectElements)
     }
+    */
+    
+    
 }
 
 
