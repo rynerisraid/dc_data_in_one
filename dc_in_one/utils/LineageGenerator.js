@@ -7,8 +7,9 @@ const tree = parser.parse(sql)
 
 class LineageGenerator extends SqlParserVisitor{
     constructor(){
-        this.depMap = {}
         super()
+        this.depMap = {}
+        
     }
     
     visitTableName(ctx){
@@ -21,5 +22,12 @@ class LineageGenerator extends SqlParserVisitor{
     }
 }
 
-const visitor = new LineageGenerator()
-visitor.visit(tree)
+
+//const visitor = new LineageGenerator()
+//visitor.visit(tree)
+/**
+ * https://github.com/apache/hive/blob/master/ql/src/java/org/apache/hadoop/hive/ql/tools/LineageInfo.java
+ * 到这里去抄源码
+ */
+
+module.exports = LineageGenerator

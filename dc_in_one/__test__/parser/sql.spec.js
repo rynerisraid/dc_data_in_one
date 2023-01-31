@@ -1,4 +1,5 @@
 const {GenericSQL} = require ('dt-sql-parser')
+const LineageGenerator = require('../../utils/LineageGenerator')
 
 const parser = new GenericSQL();
 describe('测试dt-sql-parser', () => {
@@ -32,3 +33,16 @@ describe('测试dt-sql-parser', () => {
     
     
 });
+
+
+describe('测试表格和Select Element',()=>{
+
+  it('visit table and element',()=>{
+
+    const correctSql = 'select id,name from user1;';
+    const tree = parser.parse(correctSql);
+    const visitor = new LineageGenerator()
+    visitor.visit(tree)
+  })
+
+})
