@@ -1,43 +1,65 @@
-const { PostgresSQL, PostgreSQLParserVisitor } = require('dt-sql-parser')
+const { PostgresSQL, 
+        PostgreSQLParserVisitor,
+        PostgreSQLParserListener } = require('dt-sql-parser')
 
-const parser = new PostgresSQL()
-const sql = `select id,name from user1;`
+//const parser = new PostgresSQL()
+//const sql = `select id,name from user1;`
 // parseTree
-const tree = parser.parse(sql)
+// parseTree
+//const tree = parser.parse(sql)
 
-class LineageGenerator extends PostgreSQLParserVisitor{
-    constructor(){
-        super()
+
+class PgLiteVisitor extends PostgreSQLParserVisitor{
+    
+    constructor(props) {
+        super(props);
         this.depsMap={
-            input:[],
-            output:[]
+            inputTable:{
+                table:[],
+                alias:{},
+                cols:[]
+            },
+            outputTable:{
+
+            }
+        }
+        this.qualifiedName = ''
+    }
+    
+    visitIdentifier(ctx){
+        let identifierName = ctx.getText().toLowerCase();
+        //console.log('identifierName',identifierName)
+    }
+
+    visitQualified_name(ctx){
+        this.qualifiedName = ctx.getText().toLowerCase();
+        //console.log('qualifiedName',qualifiedName)
+        this.depsMap.inputTable.table.push(this.qualifiedName)
+    }
+
+    visitAlias_clause(ctx){
+        let aliasName = ctx.getText().toLowerCase();
+        //console.log('aliasName',aliasName)
+        if(this.qualifiedName!==''){
+            this.depsMap.inputTable.alias[this.qualifiedName] = aliasName
+            this.qualifiedName = ''
         }
         
     }
-    
-    
 
-    /*
-    visitTable_ref(ctx){
+    visitTarget_list(ctx){
+        let targetListName = ctx.getText().toLowerCase()
+        targetListName.split(',').forEach(item=>{
+            this.depsMap.inputTable.cols.push(item)
+        })
         
     }
-    */
-
     
 
-    /*
-    visitTableName(ctx){
-        let tableName = ctx.getText().toLowerCase()
-        console.log('TableName', tableName)
-    }
-    visitSelectElements(ctx){
-        let selectElements = ctx.getText().toLowerCase()
-        console.log('SelectElements', selectElements)
-    }
-    */
-    
-    
 }
+
+
+
 
 
 //const visitor = new LineageGenerator()
@@ -47,4 +69,4 @@ class LineageGenerator extends PostgreSQLParserVisitor{
  * 到这里去抄源码
  */
 
-module.exports = LineageGenerator
+module.exports = PgLiteVisitor
