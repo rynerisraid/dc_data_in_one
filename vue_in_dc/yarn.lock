@@ -49,6 +49,11 @@
   "resolved" "https://registry.npmmirror.com/@types/lodash/-/lodash-4.14.191.tgz"
   "version" "4.14.191"
 
+"@vicons/ionicons5@^0.12.0":
+  "integrity" "sha512-Iy1EUVRpX0WWxeu1VIReR1zsZLMc4fqpt223czR+Rpnrwu7pt46nbnC2ycO7ItI/uqDLJxnbcMC7FujKs9IfFA=="
+  "resolved" "https://registry.npmmirror.com/@vicons/ionicons5/-/ionicons5-0.12.0.tgz"
+  "version" "0.12.0"
+
 "@vitejs/plugin-vue@^4.0.0":
   "integrity" "sha512-e0X4jErIxAB5oLtDqbHvHpJe/uWNkdpYV83AOG2xo2tEVSzCzewgJMtREZM30wXnM5ls90hxiOtAuVU6H5JgbA=="
   "resolved" "https://mirrors.huaweicloud.com/repository/npm/@vitejs/plugin-vue/-/plugin-vue-4.0.0.tgz"

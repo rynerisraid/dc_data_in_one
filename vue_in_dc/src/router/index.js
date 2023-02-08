@@ -19,6 +19,7 @@ let routes = [
     children:[
       { path: "/dashboard/category", component: ()=> import("../views/dashboard/Category.vue") },
       { path: "/dashboard/article", component: ()=> import("../views/dashboard/ReportView.vue") },
+      { path: "/dashboard/sqlEditor", component: ()=> import("../views/dashboard/SqlEditor.vue") },
   ]
   }
 ]
