@@ -52,7 +52,6 @@ class PgLiteVisitor extends PostgreSQLParserVisitor{
         targetListName.split(',').forEach(item=>{
             this.depsMap.inputTable.cols.push(item)
         })
-        
     }
     
 

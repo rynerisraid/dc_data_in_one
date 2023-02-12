@@ -102,6 +102,11 @@ describe('测试表格和Select Element',()=>{
     expect(depInputTable.alias[table[1]]).toEqual('b')
   })
 
+  it('测试insert和select语句', () => {
+    
+  });
+  
+
   
 })
 
