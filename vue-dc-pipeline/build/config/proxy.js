@@ -11,5 +11,7 @@ export function createViteProxy(isUseProxy = true, proxyType) {
       rewrite: (path) => path.replace(new RegExp(`^${proxyConfig.prefix}`), ''),
     },
   }
+
+  console.log(proxy)
   return proxy
 }

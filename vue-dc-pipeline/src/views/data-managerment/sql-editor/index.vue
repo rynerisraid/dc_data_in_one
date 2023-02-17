@@ -3,8 +3,11 @@
         <div class="app-container">
             <n-card shadow="never" >
                 <div class="editor-tools">
+                  <n-space size="small">
                     <n-button type="primary" @click="handleExecution">解析</n-button>
                     <n-button @click="resetEditor">重置</n-button>
+                    <n-button @click="saveResult">保存</n-button>
+                  </n-space>
                 </div>
                 <div class="editor-wrapper">
                     <codemirror
@@ -25,6 +28,7 @@
             <n-card style="margin-left:20px">
               力道图
             </n-card>
+          
         </div>
     </CommonPage>
 </template>
@@ -37,7 +41,7 @@ import { Codemirror } from 'vue-codemirror'
 import { sql } from '@codemirror/lang-sql'
 //import { useCodeStore } from '@/store/editor/code'
 import { useCodeStore } from '@/store'
-
+import api from './api'
 
 
 
@@ -72,9 +76,17 @@ const resetEditor = () => {
   
 }
 
-const handleExecution = () =>{
-  console.log('handleExecution')
-  codeStore.handleParse(code.value);
+const handleExecution = async () =>{
+  console.log('handleExecution',code.value)
+
+  try{
+    const result = await api.getSQLAnalysisRes({sql:code.value})
+    $message.success('解析成功')
+  }catch(error){
+    console.error(error)
+  }
+  
+  
 }
 
 

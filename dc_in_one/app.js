@@ -30,8 +30,10 @@ app.use(express.static(path.join(__dirname,"public")))
  */
 app.use("/test",require("./routers/TestRouter"))
 app.use("/auth",require("./routers/auth/AuthRouter"))
+app.use("/user",require("./routers/user/UserRouter"))
 app.use("/menu",require("./routers/menu/MenuRouter"))
-
+app.use("/data",require('./routers/data_management/LineageManagementRouter'))
+app.use("/data",require('./routers/data_management/DataMapRouter'))
 
 app.get("/",async (req,res)=>{
     

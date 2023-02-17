@@ -2,20 +2,33 @@ import { ref } from "vue"
 import { defineStore } from "pinia"
 
 
-export const useCodeStore = defineStore("code",()=>{
-    const code = ref("select * from users; (pinia version) ")
-    
-    const resetCode = ()=>{
-      return code.value
-    }
-  
-    const handleParse = (value)=>{
-      console.log('useCodeStore',value)
-    }
-  
+export const useCodeStore = defineStore("code",{
+  //const code = ref("select * from users; (pinia version) ")
+  state(){
     return {
-      resetCode,handleParse
+      code:{
+        value:"select * from users; (pinia version) "
+      }
     }
+  },
+  getters:{
+
+  },
+  actions: {
+    resetCode(){
+      return this.code.value
+    },
+  
+    handleParseResult(value){
+      console.log('handleParseResult',value)
+    }
+  
+  }
+    
+
+
+
+
   
   })
   

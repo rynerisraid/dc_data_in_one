@@ -45,36 +45,49 @@ router.post('/signup',async (req,res)=>{
 /**
  * 用户登录
  * get 请求要用 query
+ * get 用 query
+ * const { username,password } = req.query;
  */
 
-router.get('/signin',async (req,res)=>{
+router.post('/signin',async (req,res)=>{
     //验证密码
-    const { username,password } = req.query;
-    console.log(req)
+    //const { username,password } = req.query;
+    const { name, password } = req.body
+    //console.log(req)
 
-    console.log('/signin',{ username,password } )
+    //console.log('/signin',{ name,password } )
     let result ={
-        msg:'ok',
-        code:200
+        message:'登录成功',
+        code:0,
+        data:{}
     }
     try {
+        let token = uuidv4()
         const users = await AuthUser.findAll({
-            attributes: ['username', 'password'],
+            attributes: ['id','username', 'password'],
             where:{
-                username:username,
+                username:name,
                 password:password,
                 status:'A'
             }});
-        if(users.length>0){
-            result['data'] = '登录成功!'
-            result['token'] = 'aaaaaaaaaaaaaaaaaaaaaa'
+        if(users.length===1){
+            let id = users[0].dataValues.id
+            //console.log(users[0].dataValues.id)
+            await AuthUser.update({ token: token,last_login: Date.parse( new Date()) }, {
+                where: {
+                    id: id
+                }
+              });
+            result.message= '登录成功!'
+            result.data.token= token;
         }else{
-            result['data'] = '登录失败!请检查账号密码'
-            result['msg'] = 'error'
+            result.message= '账号异常'
+            result.code = -1
         }
         
     } catch (error) {
-        result['msg'] = error
+        result.message= '状态异常!'
+        result.code = -1
     }
     res.send(result)
 })
