@@ -3420,7 +3420,7 @@ dotenv@^16.0.0:
 
 dt-sql-parser@^4.0.0-beta.3.2:
   version "4.0.0-beta.3.2"
-  resolved "https://registry.npmmirror.com/dt-sql-parser/-/dt-sql-parser-4.0.0-beta.3.2.tgz"
+  resolved "https://registry.npmmirror.com/dt-sql-parser/-/dt-sql-parser-4.0.0-beta.3.2.tgz#1df3341b5e12eaa31d6fd9174d440ed17c1e2f15"
   integrity sha512-QrgsWzpqqUy6vAGkK4Ep4WdZfhy0s2SNR7QuwQ3RsdDNQ4rMzH1jQTdEBK6oU+16o1xpStwjnzk3vuxMOhiisw==
   dependencies:
     "@types/antlr4" "4.7.0"

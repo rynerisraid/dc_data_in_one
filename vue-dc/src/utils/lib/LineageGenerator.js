@@ -1,5 +1,5 @@
 //import { antlr, TablePrimary } from "rhombic";
-import {} from 'd'
+
 
 
 export function parseLineageBySql(input){
