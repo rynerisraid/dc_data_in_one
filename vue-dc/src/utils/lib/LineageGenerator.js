@@ -1,4 +1,4 @@
-//import { antlr, TablePrimary } from "rhombic";
+import { antlr, TablePrimary } from "rhombic";
 
 
 
