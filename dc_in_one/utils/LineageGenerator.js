@@ -53,9 +53,21 @@ class PgLiteVisitor extends PostgreSQLParserVisitor{
             this.depsMap.inputTable.cols.push(item)
         })
     }
-    
 
 }
+
+
+/*
+    区分Visit PrimaryTable
+    只返回Table的Visitor
+
+*/
+
+
+/**
+ * 返回边的Visitor
+ */
+
 
 
 
